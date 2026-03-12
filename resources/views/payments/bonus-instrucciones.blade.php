@@ -1,0 +1,33 @@
+@extends('layout')
+@section('content')
+    <div class="p-4">
+        <h4 class="mb-4 text-uppercase">Instrucciones: Punto Extra REST</h4>
+
+        <div class="alert alert-info">
+            <h4 class="alert-heading">Objetivo</h4>
+            <p>El objetivo de este punto es que desarrolles una nueva ruta que obtenga datos desde una API pública y los
+                muestres en una tabla dentro de una vista Blade. Esto te permitirá interactuar con APIs externas,
+                procesar los datos y representarlos visualmente en tu aplicación Laravel.</p>
+        </div>
+
+        <div class="alert alert-secondary">
+            <h4 class="alert-heading">Descripción</h4>
+            <p>Utilizando el controlador llamado <code>BonusController</code>, que ya tiene la función
+                <code>index()</code>, deberás implementar la lógica para obtener los datos desde la API externa y
+                pasarlos a la vista para visualizarlos en la tabla.</p>
+            <h6>Requisitos:</h6>
+            <ul>
+                <li>En el controlador, utiliza <strong>Guzzle HTTP Client</strong> (Laravel lo incluye por defecto) o el
+                    cliente HTTP de Laravel para hacer la solicitud a la API pública.</li>
+                <li>Endpoint de la API externa: <a href="https://jsonplaceholder.typicode.com/users"
+                        target="_blank">https://jsonplaceholder.typicode.com/users</a></li>
+                <li>Tabla en la vista: Deberás mostrar los campos <strong>ID, Nombre, Email, Teléfono y
+                        Compañía</strong> de cada usuario.</li>
+            </ul>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="{{ route('extra-point') }}" class="btn btn-primary">Ver Punto Extra</a>
+        </div>
+    </div>
+@endsection
