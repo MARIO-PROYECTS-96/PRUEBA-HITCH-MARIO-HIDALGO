@@ -48,9 +48,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-md-12 mt-3 d-flex justify-content-center">
-            {{ $payments->links() }}
-        </div>
     </div>
 
     <script>
@@ -58,7 +55,7 @@
             language: {
                 url: '{{ asset('js/es-ES.json') }}'
             },
-            paging: false,
+            pageLength: 10,
         });
 
         function confirmDelete(id) {
