@@ -59,7 +59,6 @@
                 url: '{{ asset('js/es-ES.json') }}'
             },
             paging: false,
-            info: false,
         });
 
         function confirmDelete(id) {
