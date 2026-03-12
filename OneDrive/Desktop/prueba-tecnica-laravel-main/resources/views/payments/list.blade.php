@@ -53,7 +53,7 @@
     <script>
         $('#table').DataTable({
             language: {
-                url: 'https://cdn.datatables.net/plug-ins/2.1.6/i18n/es-ES.json'
+                url: '{{ asset('js/es-ES.json') }}'
             }
         });
 
