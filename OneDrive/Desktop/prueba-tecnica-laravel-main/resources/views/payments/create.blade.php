@@ -72,5 +72,30 @@
             hidden.value = raw;
             this.value = raw ? parseInt(raw).toLocaleString('es-CL') : '';
         });
+
+        // Confirmación al salir sin guardar
+        let formModified = false;
+        document.querySelector('form').addEventListener('input', () => formModified = true);
+        document.querySelector('form').addEventListener('submit', () => formModified = false);
+
+        document.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                if (!formModified) return;
+                e.preventDefault();
+                const href = this.href;
+                Swal.fire({
+                    title: '¿Salir sin guardar?',
+                    text: 'Tienes cambios sin guardar que se perderán.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Sí, salir',
+                    cancelButtonText: 'Quedarme',
+                }).then((result) => {
+                    if (result.isConfirmed) window.location.href = href;
+                });
+            });
+        });
     </script>
 @endsection

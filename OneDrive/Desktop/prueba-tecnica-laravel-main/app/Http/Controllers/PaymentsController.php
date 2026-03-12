@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
-use Illuminate\Http\Request;
+use App\Http\Requests\StorePaymentRequest;
+use App\Http\Requests\UpdatePaymentRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PaymentsController extends Controller
 {
     public function index()
     {
-        $payments = Payment::all();
+        $payments = Payment::paginate(10);
         return view('payments.list', compact('payments'));
     }
 
@@ -18,17 +20,12 @@ class PaymentsController extends Controller
         return view('payments.create');
     }
 
-    public function store(Request $request)
+    public function store(StorePaymentRequest $request)
     {
-        $request->validate([
-            'description' => 'required|string|max:255',
-            'price' => 'required|integer|min:0',
-        ]);
-
         try {
             Payment::create([
                 'description' => $request->description,
-                'price' => $request->price,
+                'price'       => $request->price,
             ]);
 
             return redirect()->route('payments')->with('alert-success', 'Pago creado correctamente.');
@@ -39,35 +36,27 @@ class PaymentsController extends Controller
 
     public function edit($id)
     {
-        $payment = Payment::find($id);
-
-        if (!$payment) {
-            return redirect()->route('payments')->with('alert-error', 'Pago no encontrado.');
+        try {
+            $payment = Payment::findOrFail($id);
+        } catch (ModelNotFoundException) {
+            return redirect()->route('payments')->with('alert-error', 'El pago no existe o fue eliminado.');
         }
 
         return view('payments.edit', compact('payment'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdatePaymentRequest $request, $id)
     {
-        $request->validate([
-            'description' => 'required|string|max:255',
-            'price' => 'required|integer|min:0',
-        ]);
-
-        $payment = Payment::find($id);
-
-        if (!$payment) {
-            return redirect()->route('payments')->with('alert-error', 'Pago no encontrado.');
-        }
-
         try {
+            $payment = Payment::findOrFail($id);
             $payment->update([
                 'description' => $request->description,
-                'price' => $request->price,
+                'price'       => $request->price,
             ]);
 
             return redirect()->route('payments')->with('alert-success', 'Pago actualizado correctamente.');
+        } catch (ModelNotFoundException) {
+            return redirect()->route('payments')->with('alert-error', 'El pago no existe o fue eliminado.');
         } catch (\Exception $e) {
             return redirect()->route('payments-edit', $id)->with('alert-error', 'Ocurrió un error al actualizar el pago.');
         }
@@ -75,14 +64,13 @@ class PaymentsController extends Controller
 
     public function destroy($id)
     {
-        $payment = Payment::find($id);
+        try {
+            $payment = Payment::findOrFail($id);
+            $payment->delete();
 
-        if (!$payment) {
-            return redirect()->route('payments')->with('alert-error', 'Pago no encontrado.');
+            return redirect()->route('payments')->with('alert-success', 'Pago eliminado correctamente.');
+        } catch (ModelNotFoundException) {
+            return redirect()->route('payments')->with('alert-error', 'El pago no existe o fue eliminado.');
         }
-
-        $payment->delete();
-
-        return redirect()->route('payments')->with('alert-success', 'Pago eliminado correctamente.');
     }
 }

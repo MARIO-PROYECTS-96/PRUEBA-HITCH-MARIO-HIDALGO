@@ -48,13 +48,18 @@
                 </tbody>
             </table>
         </div>
+        <div class="col-md-12 mt-3 d-flex justify-content-center">
+            {{ $payments->links() }}
+        </div>
     </div>
 
     <script>
         $('#table').DataTable({
             language: {
                 url: '{{ asset('js/es-ES.json') }}'
-            }
+            },
+            paging: false,
+            info: false,
         });
 
         function confirmDelete(id) {

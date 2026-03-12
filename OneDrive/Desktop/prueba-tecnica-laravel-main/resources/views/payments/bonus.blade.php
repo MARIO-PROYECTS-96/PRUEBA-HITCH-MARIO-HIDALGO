@@ -1,5 +1,10 @@
 @extends('layout')
 @section('content')
+    <div id="page-loader" style="display:none; position:fixed; inset:0; background:rgba(255,255,255,0.75); z-index:9999; align-items:center; justify-content:center; flex-direction:column; gap:12px;">
+        <div class="spinner-border text-primary" style="width:3rem; height:3rem;" role="status"></div>
+        <span class="text-muted fw-semibold">Cargando datos de la API...</span>
+    </div>
+
     <div class="p-4">
         <div class="row">
             <div class="col-md-9">
@@ -37,6 +42,18 @@
     </div>
 
     <script>
+        // Mostrar spinner al hacer click en el link de "Punto Extra" desde otras páginas
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('a[href="{{ route('extra-point') }}"]').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    const loader = document.getElementById('page-loader');
+                    if (loader) {
+                        loader.style.display = 'flex';
+                    }
+                });
+            });
+        });
+
         $('#table').DataTable({
             language: {
                 url: '{{ asset('js/es-ES.json') }}'
