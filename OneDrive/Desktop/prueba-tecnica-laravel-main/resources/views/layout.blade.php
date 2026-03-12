@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="//cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
-    <script src="//cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
@@ -73,6 +75,57 @@
             border-radius: 12px;
             box-shadow: 0 2px 12px rgba(0,0,0,0.07);
             min-height: 80vh;
+        }
+
+        /* DataTables custom styles */
+        table.dataTable thead th {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            color: #fff;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            border-color: rgba(255,255,255,0.1) !important;
+            white-space: nowrap;
+        }
+        table.dataTable thead th.sorting::after,
+        table.dataTable thead th.sorting_asc::after,
+        table.dataTable thead th.sorting_desc::after {
+            color: rgba(255,255,255,0.6) !important;
+        }
+        table.dataTable tbody tr:hover td {
+            background-color: #f0f5ff !important;
+        }
+        table.dataTable tbody tr td {
+            vertical-align: middle;
+            font-size: 14px;
+        }
+        div.dt-container .dt-search input {
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+        div.dt-container .dt-search input:focus {
+            outline: none;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 3px rgba(13,110,253,.15);
+        }
+        div.dt-container select {
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            padding: 4px 28px 4px 10px;
+            font-size: 13px;
+            appearance: auto;
+            -webkit-appearance: auto;
+            background-image: none !important;
+        }
+        div.dt-container .dt-info {
+            font-size: 13px;
+            color: #6c757d;
+        }
+        div.dt-container .dt-paging .page-link {
+            font-size: 13px;
         }
     </style>
 </head>

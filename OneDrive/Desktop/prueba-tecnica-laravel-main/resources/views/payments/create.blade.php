@@ -27,12 +27,17 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="price">Precio</label>
-                            <input type="number" name="price" id="price"
-                                class="form-control @error('price') is-invalid @enderror"
-                                placeholder="precio..." value="{{ old('price') }}">
+                            <label for="price_display">Precio (CLP)</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="text" id="price_display"
+                                    class="form-control @error('price') is-invalid @enderror"
+                                    placeholder="0" autocomplete="off"
+                                    value="{{ old('price') ? number_format(old('price'), 0, ',', '.') : '' }}">
+                                <input type="hidden" name="price" id="price" value="{{ old('price') }}">
+                            </div>
                             @error('price')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
@@ -57,4 +62,15 @@
             });
         </script>
     @endif
+
+    <script>
+        const display = document.getElementById('price_display');
+        const hidden  = document.getElementById('price');
+
+        display.addEventListener('input', function () {
+            let raw = this.value.replace(/\D/g, '');
+            hidden.value = raw;
+            this.value = raw ? parseInt(raw).toLocaleString('es-CL') : '';
+        });
+    </script>
 @endsection

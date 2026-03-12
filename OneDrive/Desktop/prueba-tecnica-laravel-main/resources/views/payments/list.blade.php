@@ -25,17 +25,21 @@
                         <tr>
                             <td class="text-center">{{ $payment->id }}</td>
                             <td class="text-center">{{ $payment->description }}</td>
-                            <td class="text-center">{{ $payment->price }}</td>
+                            <td class="text-center">$ {{ number_format($payment->price, 0, ',', '.') }}</td>
                             <td class="text-center">
-                                <div class="btn-group">
+                                <div class="d-flex gap-2 justify-content-center">
                                     <a href="{{ route('payments-edit', $payment->id) }}"
-                                        class="btn btn-sm btn-warning">Editar</a>
+                                        class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil-fill"></i> Editar
+                                    </a>
                                     <form id="form-delete-{{ $payment->id }}"
                                         action="{{ route('payments-destroy', $payment->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="btn btn-sm btn-danger"
-                                            onclick="confirmDelete({{ $payment->id }})">Eliminar</button>
+                                            onclick="confirmDelete({{ $payment->id }})">
+                                            <i class="bi bi-trash-fill"></i> Eliminar
+                                        </button>
                                     </form>
                                 </div>
                             </td>
@@ -47,7 +51,11 @@
     </div>
 
     <script>
-        $('#table').DataTable();
+        $('#table').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/2.1.6/i18n/es-ES.json'
+            }
+        });
 
         function confirmDelete(id) {
             Swal.fire({
