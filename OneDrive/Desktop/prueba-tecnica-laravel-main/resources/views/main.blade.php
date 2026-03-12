@@ -7,6 +7,12 @@
             <a href="/">Inicio</a>
         </li>
         <li class="nav-item text-nowrap">
+            <a href="{{ route('instrucciones') }}">Instrucciones</a>
+        </li>
+        <li class="nav-item text-nowrap">
+            <a href="{{ route('extra-point-instrucciones') }}">Instrucciones Punto Extra</a>
+        </li>
+        <li class="nav-item text-nowrap">
             <a href="{{ route('payments') }}">Listado de Pagos</a>
         </li>
         <li class="nav-item text-nowrap">

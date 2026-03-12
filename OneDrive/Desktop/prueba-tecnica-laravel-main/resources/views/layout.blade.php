@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="//cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
     <script src="//cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -26,7 +27,31 @@
             </div>
         </div>
     </div>
-   
+
+    {{-- Notificaciones SweetAlert2 --}}
+    @if (session('alert-success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: '{!! session('alert-success') !!}',
+                confirmButtonColor: '#0d6efd',
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        </script>
+    @endif
+    @if (session('alert-error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: '¡Error!',
+                text: '{!! session('alert-error') !!}',
+                confirmButtonColor: '#dc3545',
+            });
+        </script>
+    @endif
+
 </body>
 
 </html>

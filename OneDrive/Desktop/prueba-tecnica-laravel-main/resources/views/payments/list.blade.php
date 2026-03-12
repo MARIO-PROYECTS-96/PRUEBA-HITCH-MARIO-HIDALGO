@@ -10,16 +10,6 @@
         <br>
         <br>
         <hr>
-        @if (session()->has('alert-success'))
-            <div class="alert alert-success" role="alert">
-                {!! session()->get('alert-success') !!}
-            </div>
-        @endif
-        @if (session('alert-error'))
-            <div class="alert alert-danger" role="alert">
-                {!! session('alert-error') !!}
-            </div>
-        @endif
         <div class="col-md-12">
             <table class="table table-bordered" id="table">
                 <thead>
@@ -31,19 +21,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="text-center">1</td>
-                        <td class="text-center">Pago 1</td>
-                        <td class="text-center">1000</td>
-                        <td class="text-center">
-                            <div class="btn-group">
-                                <a href="#"
-                                    class="btn btn-sm btn-warning">Editar</a>
-                                <a href="#"
-                                    class="btn btn-sm btn-danger">Eliminar</a>
-                            </div>
-                        </td>
-                    </tr>
+                    @foreach ($payments as $payment)
+                        <tr>
+                            <td class="text-center">{{ $payment->id }}</td>
+                            <td class="text-center">{{ $payment->description }}</td>
+                            <td class="text-center">{{ $payment->price }}</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <a href="{{ route('payments-edit', $payment->id) }}"
+                                        class="btn btn-sm btn-warning">Editar</a>
+                                    <form id="form-delete-{{ $payment->id }}"
+                                        action="{{ route('payments-destroy', $payment->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                            onclick="confirmDelete({{ $payment->id }})">Eliminar</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -51,5 +48,22 @@
 
     <script>
         $('#table').DataTable();
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Esta acción eliminará el pago permanentemente.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('form-delete-' + id).submit();
+                }
+            });
+        }
     </script>
 @endsection
