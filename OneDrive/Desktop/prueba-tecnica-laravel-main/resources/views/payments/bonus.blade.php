@@ -22,38 +22,25 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($users as $user)
+                        <tr>
+                            <td class="text-center">{{ $user['id'] }}</td>
+                            <td class="text-center">{{ $user['name'] }}</td>
+                            <td class="text-center">{{ $user['email'] }}</td>
+                            <td class="text-center">{{ $user['phone'] }}</td>
+                            <td class="text-center">{{ $user['company']['name'] }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
 
-    <script src="{{ asset('js/axios.min.js') }}"></script>
     <script>
-        const dt = $('#table').DataTable({
+        $('#table').DataTable({
             language: {
                 url: '{{ asset('js/es-ES.json') }}'
             }
         });
-
-        axios.get('https://jsonplaceholder.typicode.com/users')
-            .then(function (response) {
-                response.data.forEach(function (user) {
-                    dt.row.add([
-                        user.id,
-                        user.name,
-                        user.email,
-                        user.phone,
-                        user.company.name
-                    ]).draw(false);
-                });
-            })
-            .catch(function () {
-                Swal.fire({
-                    icon: 'error',
-                    title: '¡Error!',
-                    text: 'No se pudo obtener los datos de la API.',
-                    confirmButtonColor: '#dc3545',
-                });
-            });
     </script>
 @endsection
